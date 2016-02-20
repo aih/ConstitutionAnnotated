@@ -1,1 +1,1 @@
-{"constitution":{"mappings":{"page":{"properties":{"html":{"type":"string"},"pageindex":{"type":"long"},"pagenumber":{"type":"string"},"text":{"type":"string"}}}}}}
+{"constitution":{"mappings":{"page":{"properties":{"html":{"type":"string"},"keywords":{"type":"string"},"pageindex":{"type":"long"},"pagenumber":{"type":"string"},"text":{"type":"string"}}}}}}
