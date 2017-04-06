@@ -65,7 +65,7 @@ def convertPages(fname, pages = None):
         print(pagenumber)
     infile.close()
 
-def getBestTermsOld(terms,maxTerms=5):
+def getBestTerms(terms,maxTerms=5):
     termScores={term:terms[term]['doc_freq']/terms[term]['ttf'] for term in terms if len(term)>3 and (not term.isdigit()) and terms[term]['doc_freq']>1 and terms[term]['doc_freq']/terms[term]['ttf']<1}
     sortedTerms = sorted(termScores.items(), key=operator.itemgetter(1), reverse=True)
     return sortedTerms[0:maxTerms]
@@ -114,3 +114,43 @@ def setAllTermsBatch(start=0,batch=200):
             docID=doc['_id']
             print(doc['_source']['pageindex'])
             es.update(index=INDEX, doc_type=DOCTYPE, id=docID, body={"doc": {"keywords":bestTerms}})
+
+
+#Split pdf into one page pdfs
+from pyPdf import PdfFileWriter, PdfFileReader
+
+def makeOnePagersOld(filename='GPO-CONAN-REV-2014.pdf' ,path='pdf/'):
+    infile = PdfFileReader(open(filename, 'rb'))
+    print(infile.getNumPages())
+    for i in range(infile.getNumPages()):
+        p = infile.getPage(i)
+        outfile = PdfFileWriter()
+        outfile.addPage(p)
+        outputStream = file(path+'pageindex-%02d.pdf' % i, 'wb')
+        outfile.write(outputStream)
+        outputStream.close()
+
+def makeOnePagersOld2(filename='GPO-CONAN-REV-2014.pdf' ,path='pdf/'):
+    infile = file(filename, 'rb')
+    for i, page in enumerate(PDFPage.get_pages(infile)):
+        with open(path+'pageindex-%0s.pdf' % str(i), 'wb') as f:
+            print(i)
+            f.write(page.contents[0])
+
+#Split pdf into one page pdfs
+from pdfrw import PdfWriter, PdfReader
+
+def makeOnePagers(filename='GPO-CONAN-REV-2014.pdf' ,path='pdf/'):
+    infile = PdfReader(filename)
+    pages = len(infile.pages)
+    print(pages)
+    for i in range(pages):
+       p = infile.pages[i]
+       if(p and len(p)>0):
+           outfile = PdfWriter()
+           outfile.addPage(p)
+           try:
+               outfile.write('pdf/pageindex-%s.pdf' % str(i))
+           except:
+               pass
+           print(i)

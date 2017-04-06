@@ -1,0 +1,3 @@
+[submodule "elasticsearch-gui"]
+	path = elasticsearch-gui
+	url = https://github.com/aih/elasticsearch-gui.git
