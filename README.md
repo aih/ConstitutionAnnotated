@@ -1,7 +1,7 @@
 # ConstitutionAnnotated
 Search data for Constitution Annotated
 
-In production, ES may be served through a proxy server to the /elasticproxy url on your server.
+[Demo](http://ca.linkedlegislation.com)
 
 ## Quick Start (development)
 1. Clone this repository
@@ -31,4 +31,5 @@ elasticdump --input=./constitutionsearch.json --type=data --output=http://localh
 7. Navigate to /index.html
 
 8. See ConstitionAnnotatedScreenshot.png for a preview of the search UI.
+In production, ES may be served through a proxy server to the /elasticproxy url on your server. On Linux, you can use the sample nginx.conf to serve ES as a proxy.
 
